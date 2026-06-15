@@ -1,0 +1,161 @@
+# =============================================================
+# Python
+# =============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+lib/
+lib64/
+
+# =============================================================
+# Virtual Environments
+# =============================================================
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# =============================================================
+# Environment Variables (JANGAN upload API key!)
+# =============================================================
+.env
+.env.local
+.env.*.local
+*.env
+config/secrets.yaml
+config/credentials.yaml
+
+# =============================================================
+# Jupyter Notebook
+# =============================================================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+*.ipynb_checkpoints
+
+# =============================================================
+# Data Files (data mentah tidak di-upload ke GitHub)
+# =============================================================
+data/raw/*
+data/processed/*
+data/external/*
+
+# Kecualikan file .gitkeep agar folder tetap terlacak
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+
+# Format data besar
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.nc
+*.nc4
+*.tif
+*.tiff
+*.geotiff
+
+# =============================================================
+# Model Files (model terlatih bisa sangat besar)
+# =============================================================
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.onnx
+*.pb
+models/trained/*
+!models/trained/.gitkeep
+
+# =============================================================
+# Laporan & Dokumen Besar (upload manual atau gunakan Git LFS)
+# =============================================================
+reports/presentations/*.pptx
+reports/presentations/*.pdf
+
+# Tapi tetap lacak literature review
+!reports/literature_review/*
+
+# =============================================================
+# References / Papers PDF (file besar, gunakan Zotero/Mendeley)
+# =============================================================
+references/papers/*.pdf
+
+# =============================================================
+# IDE & Editor
+# =============================================================
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+
+# Spyder
+.spyderproject.db
+.spyproject/
+
+# =============================================================
+# OS Files
+# =============================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+
+# =============================================================
+# Logs & Temporary Files
+# =============================================================
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+logs/
+mlruns/
+wandb/
+.mlflow/
+
+# =============================================================
+# Node (dari generate.js yang sudah ada)
+# =============================================================
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# =============================================================
+# Microsoft Office temp files
+# =============================================================
+~$*.docx
+~$*.xlsx
+~$*.pptx
