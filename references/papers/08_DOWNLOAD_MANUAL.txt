@@ -1,7 +1,0 @@
-Paper No. 08
-Filename: 08_XGBoost for Air Quality Index Prediction Ranking Assessment_Atmosphere MDPI 2024.pdf
-
-Download manual dari salah satu link berikut:
-  - https://www.mdpi.com/2073-4433/15/2/200/pdf?version=1706685649
-
-Alternatif: Cari judul di ResearchGate.net atau Google Scholar
