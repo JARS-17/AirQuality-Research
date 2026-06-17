@@ -1,5 +1,5 @@
 # Glosarium dan Konsep Dasar Penelitian
-*Dokumen ini disusun khusus agar Anda dapat menguasai istilah-istilah dasar (fundamental) dari nol hingga mahir terkait penelitian AI dan Kualitas Udara.*
+*Dokumen ini disusun khusus agar dapat menguasai istilah-istilah dasar (fundamental) dari nol hingga mahir terkait penelitian AI dan Kualitas Udara.*
 
 ---
 
@@ -75,7 +75,7 @@ Mirip RMSE, tapi ini dalam bentuk persentase (%).
 
 ### 16. R² (R-Squared / Koefisien Determinasi)
 Skala nilai dari 0 sampai 1 (atau 0% sampai 100%) yang menunjukkan seberapa jago AI menangkap variasi/pola data.
-*   *Contoh:* R² = 0.85 artinya AI Anda bisa menjelaskan 85% kejadian di dunia nyata dengan benar. Semakin mendekati angka **1**, semakin **SEMPURNA**.
+*   *Contoh:* R² = 0.85 artinya AI bisa menjelaskan 85% kejadian di dunia nyata dengan benar. Semakin mendekati angka **1**, semakin **SEMPURNA**.
 
 ### 17. Overfitting (Terlalu Menghafal)
 Penyakit AI paling umum. AI terlalu jenius saat ujian latihan (karena dia menghafal kunci jawaban/data training), tapi saat diberi soal ujian sungguhan (data baru di dunia nyata), nilainya hancur lebur.
