@@ -47,17 +47,19 @@ config/credentials.yaml
 # =============================================================
 # Data Files (data mentah tidak di-upload ke GitHub)
 # =============================================================
-data/raw/*
+# data/raw/*
+data/raw/era5/*
 data/processed/*
 data/external/*
 
 # Kecualikan file .gitkeep agar folder tetap terlacak
-!data/raw/.gitkeep
+# !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/external/.gitkeep
 
 # Format data besar
-*.csv
+# *.csv
+*.zip
 *.xlsx
 *.xls
 *.parquet
@@ -95,7 +97,7 @@ reports/presentations/*.pdf
 # =============================================================
 # References / Papers PDF (file besar, gunakan Zotero/Mendeley)
 # =============================================================
-references/papers/*.pdf
+# references/papers/*.pdf
 
 # =============================================================
 # IDE & Editor
