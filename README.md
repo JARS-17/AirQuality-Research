@@ -1,5 +1,5 @@
 # 🌫️ Air Quality Research — KP BRIN 2026
-### Prediksi Kualitas Udara berbasis Machine Learning & Data Science
+### Prediksi Konsentrasi PM2.5 di Cekungan Bandung Menggunakan Deep Learning dan Explainable AI
 
 > **Peneliti:** Ginda Fajar Riadi Marpaung  
 > **Program Studi:** Sains Data — Institut Teknologi Sumatera (ITERA)  
@@ -12,34 +12,53 @@
 
 ## 📌 Deskripsi Proyek
 
-Proyek ini merupakan penelitian Kerja Praktik (KP) di BRIN yang berfokus pada pengembangan model prediksi dan analisis kualitas udara berbasis pendekatan data science dan machine learning. Penelitian ini berfokus pada wilayah Indonesia (khususnya Jawa Barat/Cekungan Bandung) dengan memanfaatkan data sensor darat dan data reanalisis satelit.
+Proyek ini merupakan penelitian Kerja Praktik (KP) di BRIN yang bertujuan untuk membangun model prediksi konsentrasi PM2.5 di kawasan Cekungan Bandung menggunakan pendekatan Machine Learning dan Deep Learning, serta menganalisis faktor-faktor meteorologi yang paling berpengaruh terhadap polusi udara menggunakan metode Explainable AI (SHAP).
 
-**Polutan yang dikaji:** PM2.5  
-**Metode utama:** Machine Learning, Deep Learning (LSTM), Explainable AI (SHAP)  
-**Periode data:** 2022–2023 (1 Tahun Siklus Penuh, Resolusi Per Jam)
+**Polutan yang dikaji:** PM2.5 (Particulate Matter ≤ 2.5 µm)  
+**Wilayah studi:** Cekungan Bandung, Jawa Barat, Indonesia  
+**Periode data:** November 2022 – November 2023 (1 siklus musiman penuh, resolusi per jam)  
+**Jumlah observasi:** ±8.760 titik data (*hourly*)
+
+---
+
+## 📊 Sumber Data
+
+| Sumber Data | Deskripsi | Format |
+|-------------|-----------|--------|
+| **Sensor PurpleAir** | Konsentrasi PM2.5 per jam dari sensor *low-cost* di Cekungan Bandung | CSV (`hourly_all_sensors.csv`) |
+| **ECMWF Copernicus ERA5** | Data reanalisis meteorologi (suhu, kelembapan, kecepatan angin, curah hujan, tekanan udara, tutupan awan, tinggi lapisan batas atmosfer) | CSV (`era5_bandung_2022_2026.csv`) |
 
 ---
 
 ## 🗂️ Struktur Proyek
 
 ```
-KP-BRIN-AirQuality/
+AirQuality-Research/
 │
 ├── 📁 data/
-│   ├── raw/            # Data mentah dari sumber asli (ERA5, sensor in-situ)
-│   └── processed/      # Data yang sudah dibersihkan, normalisasi, fitur waktu
+│   ├── raw/                # Dataset mentah (sensor PM2.5 & ERA5 meteorologi)
+│   └── processed/          # Hasil preprocessing (train/val/test scaled, scaler)
 │
 ├── 📁 notebooks/
-│   └── PM25_Prediction_Bandung_Full.ipynb  # File Terpadu (EDA hingga SHAP)
-│
-├── 📁 reports/
-│   ├── figures/            # Grafik & visualisasi hasil
-│   ├── literature_review/  # Dokumen literature review & gap analysis
-│   └── presentations/      # Slide presentasi
+│   ├── 01_exploratory/
+│   │   └── 01_EDA_PM25_ERA5.ipynb              # Eksplorasi & visualisasi data
+│   ├── 02_preprocessing/
+│   │   └── 02_Preprocessing_FeatureEngineering.ipynb  # Pembersihan, feature engineering, split data
+│   ├── 03_modeling/
+│   │   ├── 03_Baseline_Models.ipynb            # Random Forest & XGBoost + GridSearch tuning
+│   │   └── 04_LSTM_Model.ipynb                 # LSTM & BiLSTM + GridSearch tuning
+│   ├── 04_interpretation/
+│   │   └── 05_SHAP_Interpretation_LSTM.ipynb   # Analisis SHAP (feature importance & kausalitas)
+│   └── PM25_Prediction_Bandung_Full.ipynb      # Notebook gabungan (seluruh pipeline dalam 1 file)
 │
 ├── 📁 references/
-│   ├── papers/         # Paper jurnal referensi pendukung (PDF)
-│   └── notes/          # Catatan teknis & Draf Naskah Jurnal (JMG BMKG)
+│   ├── papers/             # 22 paper jurnal referensi (PDF, Q1/Q2 Scopus)
+│   └── notes/              # Catatan teknis, penjelasan variabel, draf jurnal
+│
+├── 📁 reports/
+│   ├── figures/            # Flowchart penelitian & grafik hasil
+│   ├── literature_review/  # Critical review 22 jurnal (format markdown)
+│   └── presentations/      # Slide presentasi & pemetaan literatur
 │
 ├── 📄 README.md
 ├── 📄 requirements.txt
@@ -58,44 +77,43 @@ cd AirQuality-Research
 
 ### 2. Setup Environment
 ```bash
-# Buat virtual environment
 python -m venv venv
-
-# Aktivasi (Windows)
-venv\Scripts\activate
-
-# Install dependencies
+venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 ```
 
-### 3. Menjalankan Kode Utama
-Buka aplikasi VSCode atau Jupyter Notebook Anda. Navigasikan ke dalam folder `notebooks/` lalu buka file tunggal **`PM25_Prediction_Bandung_Full.ipynb`**. 
-Seluruh pemodelan dari tahap pembersihan data hingga pembuatan plot interpretasi (SHAP) dapat langsung dijalankan secara berurutan.
+### 3. Menjalankan Kode
+Buka folder ini di VSCode atau Jupyter Notebook, lalu jalankan notebook secara berurutan mulai dari `01_EDA` hingga `05_SHAP`, atau langsung buka file gabungan `PM25_Prediction_Bandung_Full.ipynb` di folder `notebooks/`.
 
 ---
 
-## 📊 Data Sources
+## 🧪 Metode & Pipeline
 
-| Sumber Data | Tipe | Status |
-|-------------|------|--------|
-| ECMWF Copernicus (ERA5) | Meteorologi Reanalisis (Angin, Suhu, Hujan, dll) | ✅ Selesai |
-| Sensor PurpleAir | Kualitas Udara In-Situ (PM2.5) Cekungan Bandung | ✅ Selesai |
+### Fase 1 — Eksplorasi Data (EDA)
+- [x] Analisis distribusi dan tren musiman PM2.5
+- [x] Korelasi PM2.5 dengan parameter meteorologi ERA5
+- [x] Identifikasi pola diurnal (harian) dan musiman (kemarau vs hujan)
 
----
+### Fase 2 — Preprocessing & Feature Engineering
+- [x] Penanganan *missing values* (imputasi interpolasi)
+- [x] Pembuatan fitur lag (1 jam, 24 jam) untuk autokorelasi PM2.5
+- [x] *Cyclical encoding* waktu (sin/cos untuk jam dan bulan)
+- [x] Penanda musim kemarau (`is_dry_season`)
+- [x] Normalisasi MinMaxScaler & pembagian data kronologis 70/10/20
 
-## 🧪 Metode & Model
+### Fase 3 — Baseline Models (Machine Learning Klasik)
+- [x] Random Forest — Default & Tuned (GridSearchCV)
+- [x] XGBoost — Default & Tuned (GridSearchCV)
 
-### Fase 1 — Baseline Models
-- [x] Random Forest Tuned (Hyperparameter GridSearch)
-- [x] XGBoost Tuned (Hyperparameter GridSearch)
+### Fase 4 — Deep Learning Models
+- [x] Stacked LSTM — Default (Early Stopping) & Tuned (Grid Search Manual)
+- [x] Bidirectional LSTM — Default (Early Stopping) & Tuned (Grid Search Manual)
+- [x] Transformasi *Sliding Window* 24 jam (Tensor 3D)
 
-### Fase 2 — Deep Learning Models
-- [x] Stacked LSTM (Long Short-Term Memory)
-- [x] Bi-LSTM (Bidirectional LSTM)
-
-### Fase 3 — Explainability
-- [x] SHAP Values Analysis (Model Kausalitas & Pengaruh Fitur)
-- [x] Ekstraksi Fitur Cuaca vs Polutan Masa Lalu
+### Fase 5 — Explainable AI (Interpretasi Kausalitas)
+- [x] SHAP KernelExplainer pada model DL terbaik
+- [x] Peringkat signifikansi fitur meteorologi terhadap PM2.5
+- [x] Analisis kontribusi relatif (%) setiap variabel prediktor
 
 ---
 
@@ -103,54 +121,51 @@ Seluruh pemodelan dari tahap pembersihan data hingga pembuatan plot interpretasi
 
 | Metrik | Deskripsi |
 |--------|-----------|
-| **RMSE** | Root Mean Square Error |
-| **MAE** | Mean Absolute Error |
-| **R²** | Coefficient of Determination |
+| **RMSE** | Root Mean Square Error — mengukur rata-rata deviasi prediksi |
+| **MAE** | Mean Absolute Error — rata-rata kesalahan absolut |
+| **R²** | Coefficient of Determination — proporsi variansi yang dijelaskan model |
 
 ---
 
 ## 📚 Literature Review
 
-Dokumen *critical review* 22 jurnal Q1/Q2 Scopus beserta *Gap Analysis* tersedia di folder [`reports/literature_review/`](./reports/literature_review/).
+Critical review terhadap **22 jurnal** Q1/Q2 Scopus & SINTA tersedia di folder [`reports/literature_review/`](./reports/literature_review/).
 
-**Jurnal utama yang menjadi Benchmark:**
-- Atmospheric Environment (Elsevier, Q1)
-- Atmosphere (MDPI, Q2)
-- Science of the Total Environment (Elsevier, Q1)
+**Jurnal referensi utama:**
+- Atmosphere (MDPI, Q2 Scopus)
+- Science of the Total Environment (Elsevier, Q1 Scopus)
+- Aerosol and Air Quality Research (Q2 Scopus)
+- Environmental Pollution (Elsevier, Q1 Scopus)
 
-**Target Publikasi Proyek Saat Ini:**
-- **Jurnal Meteorologi dan Geofisika (JMG) - Puslitbang BMKG (SINTA 2)**
-
----
-
-## 🗓️ Timeline Penelitian
-
-| Fase Penelitian | Status |
-|-----------|--------|
-| Literature review & Gap analysis | ✅ Selesai |
-| Akuisisi & Preprocessing data | ✅ Selesai |
-| Feature engineering & Baseline model | ✅ Selesai |
-| Model Deep Learning (LSTM, BiLSTM) | ✅ Selesai |
-| XAI & Interpretasi kausalitas (SHAP) | ✅ Selesai |
-| Penulisan naskah Jurnal Publikasi | 🔄 Sedang Berjalan |
+**Target publikasi:**
+- Jurnal Meteorologi dan Geofisika (JMG) — Puslitbang BMKG (SINTA 2, Gratis)
 
 ---
 
-## 📝 Cara Berkontribusi
+## 🗓️ Progress Penelitian
 
-Proyek ini adalah bagian dari penelitian Kerja Praktik. Segala bentuk diskusi dan masukan dapat disampaikan melalui menu [Issues](../../issues).
+| Fase | Aktivitas | Status |
+|------|-----------|--------|
+| 1 | Literature review & Gap analysis (22 jurnal) | ✅ Selesai |
+| 2 | Akuisisi data sensor PM2.5 & ERA5 meteorologi | ✅ Selesai |
+| 3 | Preprocessing, feature engineering, split data | ✅ Selesai |
+| 4 | Baseline model (RF & XGBoost) + GridSearch tuning | ✅ Selesai |
+| 5 | Deep Learning (LSTM & BiLSTM) + GridSearch tuning | ✅ Selesai |
+| 6 | Interpretasi SHAP & analisis kausalitas fitur | ✅ Selesai |
+| 7 | Penulisan naskah jurnal publikasi (JMG BMKG) | 🔄 Sedang berjalan |
 
 ---
 
 ## 📜 Lisensi
 
-Proyek ini dibuat secara khusus untuk keperluan akademik dan penelitian. © 2026 Ginda Fajar Riadi Marpaung — ITERA × BRIN.
+Proyek ini dibuat untuk keperluan akademik dan penelitian.  
+© 2026 Ginda Fajar Riadi Marpaung — ITERA × BRIN.
 
 ---
 
 ## 📬 Kontak
 
 - **GitHub:** [@JARS-17](https://github.com/JARS-17)
-- **Email:** ginda.123450103@student.itera.ac.id  
-- **Institusi:** Institut Teknologi Sumatera (ITERA)  
+- **Email:** ginda.123450103@student.itera.ac.id
+- **Institusi:** Institut Teknologi Sumatera (ITERA)
 - **Instansi Riset:** Badan Riset dan Inovasi Nasional (BRIN)
