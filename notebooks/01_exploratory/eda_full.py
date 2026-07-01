@@ -39,10 +39,9 @@ print("FASE 1: EXPLORATORY DATA ANALYSIS")
 print("=" * 60)
 
 # ERA5
-era5 = pd.read_csv(r'D:\Kuliah Praktik\KP BRIN\data\raw\era5_bandung_2022_2026.csv')
-era5['waktu'] = pd.to_datetime(era5['waktu'])
-era5 = era5.drop(columns=['number'])  # kolom konstan 0, tidak berguna
-era5 = era5.set_index('waktu')
+era5 = pd.read_csv(r'D:\Kuliah Praktik\KP BRIN\data\raw\era5_bandung_clean.csv')
+era5['time'] = pd.to_datetime(era5['time'])
+era5 = era5.set_index('time')
 
 # Sensor PM2.5
 sensor = pd.read_csv(r'D:\Kuliah Praktik\KP BRIN\data\raw\hourly_all_sensors.csv')
